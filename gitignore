@@ -1,0 +1,19 @@
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+
+# Temp files and user uploads
+*.pdf
+*.docx
+*.zip
+temp_uploads/
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Virtual environments (if any)
+venv/
+.env/

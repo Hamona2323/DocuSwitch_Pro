@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced PDF Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .upload-area {
+            border: 2px dashed #6c757d;
+            border-radius: 5px;
+            padding: 3rem;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin-bottom: 2rem;
+        }
+        .upload-area:hover {
+            background-color: #e9ecef;
+            border-color: #4361ee;
+        }
+        .file-info {
+            background: white;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0">Advanced PDF to Word Converter</h2>
+                    </div>
+                    <div class="card-body">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ 'danger' if category == 'error' else 'warning' }} alert-dismissible fade show">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="upload-area">
+                                <input type="file" class="d-none" id="fileInput" name="files" multiple accept=".pdf">
+                                <label for="fileInput" class="btn btn-lg btn-outline-primary mb-3">
+                                    <i class="bi bi-cloud-arrow-up"></i> Select PDF Files
+                                </label>
+                                <p class="mb-0 text-muted">Choose one or multiple files (Max 50MB each)</p>
+                                <p class="small text-muted">Supports batch conversion</p>
+                            </div>
+
+                            <div id="filePreview" class="mb-4">
+                                <!-- Files will be listed here after selection -->
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-file-earmark-word"></i> Convert to Word
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-muted small">
+                        <div class="row">
+                            <div class="col">
+                                <i class="bi bi-info-circle"></i> Files are processed server-side
+                            </div>
+                            <div class="col text-end">
+                                Python Flask | pdf2docx
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple file listing without JS -->
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const fileList = document.getElementById('filePreview');
+            fileList.innerHTML = '';
+            
+            if (this.files.length > 0) {
+                fileList.innerHTML = '<h5 class="mb-3">Selected Files:</h5>';
+                Array.from(this.files).forEach(file => {
+                    fileList.innerHTML += `
+                        <div class="file-info">
+                            <div class="d-flex justify-content-between">
+                                <span><i class="bi bi-file-pdf text-danger"></i> ${file.name}</span>
+                                <span class="text-muted">${(file.size/1024/1024).toFixed(2)} MB</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
