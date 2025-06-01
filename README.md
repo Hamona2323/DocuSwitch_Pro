@@ -50,7 +50,7 @@ pip install flask pdf2docx
 1. Clone or download the repository:
 
 ```bash
-git clone https://github.com/your-username/pdf-to-word-converter.git
+git clone https://github.com/Hamona2323/DocuSwitch_Pro
 cd pdf-to-word-converter
 ```
 
